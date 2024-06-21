@@ -2,6 +2,7 @@ package francescocristiano.U5_W1_D5_Progetto.entities;
 
 import francescocristiano.U5_W1_D5_Progetto.enums.TipoPostazione;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Postazione {
     @Id
     @GeneratedValue
@@ -17,6 +19,7 @@ public class Postazione {
     @Setter
     private String descrizione;
     @Setter
+    @Enumerated(EnumType.STRING)
     private TipoPostazione tipoPostazione;
     private int capienzaMax;
     @Setter
