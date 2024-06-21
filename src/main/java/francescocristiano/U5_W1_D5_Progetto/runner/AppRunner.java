@@ -52,9 +52,9 @@ public class AppRunner implements CommandLineRunner {
             System.out.println("1. Nuovo Utente");
             System.out.println("2. Utente registrato");
             System.out.println("3. Esci");
-            int scelta = Integer.parseInt(scanner.nextLine());
 
             try {
+                int scelta = Integer.parseInt(scanner.nextLine());
                 switch (scelta) {
                     case 1:
                         utenteNuovo();
@@ -71,7 +71,11 @@ public class AppRunner implements CommandLineRunner {
                         System.out.println("Scelta non valida");
                 }
             } catch (NumberFormatException e) {
+                System.out.println();
                 System.out.println("Scelta non valida");
+                System.out.println();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -83,12 +87,46 @@ public class AppRunner implements CommandLineRunner {
     public void utenteNuovo() {
         System.out.println("Registrazione nuovo utente:");
 
-        System.out.println("Inserisci username:");
-        String username = scanner.nextLine();
-        System.out.println("Inserisci nome completo:");
-        String nomeCompleto = scanner.nextLine();
-        System.out.println("Inserisci email:");
-        String email = scanner.nextLine();
+        String username = null;
+        String nomeCompleto = null;
+        String email = null;
+
+        try {
+            System.out.println("Inserisci username:");
+            username = scanner.nextLine();
+
+            if (utenteService.findByUsername(username) != null) {
+                System.out.println();
+                throw new Exception("Username esistente, prova con un altro username");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println();
+            return;
+        }
+
+
+        try {
+            System.out.println("Inserisci nome completo:");
+            nomeCompleto = scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println();
+            return;
+        }
+
+        try {
+            System.out.println("Inserisci email:");
+            email = scanner.nextLine();
+
+            if (utenteService.findByEmail(email) != null) {
+                System.out.println();
+                throw new Exception("Email esistente, prova con un'altra email");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println();
+            return;
+        }
 
         Utente nuovoUtente = new Utente(username, nomeCompleto, email);
         try {

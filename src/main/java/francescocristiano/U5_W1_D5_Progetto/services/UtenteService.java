@@ -39,6 +39,10 @@ public class UtenteService {
         return utenteRepository.findByUsername(username);
     }
 
+    public Utente findByEmail(String email) {
+        return utenteRepository.findByEmail(email);
+    }
+
 
     public void saveAllUtenti(List<Utente> utenti) {
         utenteRepository.saveAll(utenti);
