@@ -1,10 +1,12 @@
 package francescocristiano.U5_W1_D5_Progetto.services;
 
+import francescocristiano.U5_W1_D5_Progetto.entities.Postazione;
 import francescocristiano.U5_W1_D5_Progetto.entities.Prenotazione;
 import francescocristiano.U5_W1_D5_Progetto.repositories.PrenotazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,6 +55,11 @@ public class PrenotazioneService {
 
     public long count() {
         return prenotazioneRepository.count();
+    }
+
+    public List<Prenotazione> getPrenotazioniByDataAndPostazione(LocalDate data, Postazione postazione) {
+        return prenotazioneRepository.findAll().stream().filter(prenotazione -> prenotazione.getData().equals(data) && prenotazione.getPostazione().equals(postazione)).toList();
+
     }
 }
 

@@ -5,7 +5,9 @@ import francescocristiano.U5_W1_D5_Progetto.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -49,5 +51,19 @@ public class UtenteService {
 
     public long count() {
         return utenteRepository.count();
+    }
+
+    public List<Utente> getRandomUtenti(int number) {
+        List<Utente> utenti = utenteRepository.findAll();
+        List<Utente> randomUtenti = new ArrayList<>();
+
+        Random random = new Random();
+        while (randomUtenti.size() < number) {
+            int index = random.nextInt(utenti.size());
+            if (!randomUtenti.contains(utenti.get(index))) {
+                randomUtenti.add(utenti.get(index));
+            }
+        }
+        return randomUtenti;
     }
 }

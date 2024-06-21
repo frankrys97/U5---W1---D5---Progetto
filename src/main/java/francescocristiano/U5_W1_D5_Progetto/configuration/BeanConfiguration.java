@@ -3,6 +3,7 @@ package francescocristiano.U5_W1_D5_Progetto.configuration;
 import com.github.javafaker.Faker;
 import francescocristiano.U5_W1_D5_Progetto.entities.Edificio;
 import francescocristiano.U5_W1_D5_Progetto.entities.Postazione;
+import francescocristiano.U5_W1_D5_Progetto.entities.Prenotazione;
 import francescocristiano.U5_W1_D5_Progetto.entities.Utente;
 import francescocristiano.U5_W1_D5_Progetto.enums.TipoPostazione;
 import francescocristiano.U5_W1_D5_Progetto.services.EdificioService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +57,7 @@ public class BeanConfiguration {
     public List<Utente> utenti() {
         List<Utente> utenti = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            Utente utente = new Utente(faker.name().firstName(), faker.name().lastName(), faker.internet().emailAddress());
+            Utente utente = new Utente(faker.name().username(), faker.harryPotter().character(), faker.internet().emailAddress());
             utenteService.saveUtente(utente);
             utenti.add(utente);
         }
@@ -93,5 +95,25 @@ public class BeanConfiguration {
             default:
                 return "Postazione generica";
         }
+    }
+
+    @Bean
+    public List<Prenotazione> prenotazioni() {
+        List<Prenotazione> prenotazioni = new ArrayList<>();
+        List<Utente> utenti = utenteService.getRandomUtenti(10);
+        List<Postazione> postazioni = postazioneService.getRandomPostazioni(10);
+        for (Utente utente : utenti) {
+            for (int i = 0; i < 3; i++) {
+                LocalDate data = LocalDate.now().plusDays(i + 1);
+                if (!postazioneService.isPostazioneOccupata(postazioni.get(i), data)) {
+                    Prenotazione prenotazione = new Prenotazione(data, utente, postazioni.get(i));
+                    prenotazioneService.savePrenotazione(prenotazione);
+                    prenotazioni.add(prenotazione);
+                }
+
+            }
+
+        }
+        return prenotazioni;
     }
 }

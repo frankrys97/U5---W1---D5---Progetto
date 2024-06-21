@@ -5,7 +5,10 @@ import francescocristiano.U5_W1_D5_Progetto.repositories.PostazioniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -13,6 +16,9 @@ public class PostazioneService {
 
     @Autowired
     private PostazioniRepository postazioniRepository;
+
+    @Autowired
+    private PrenotazioneService prenotazioneService;
 
 
     public void savePostazione(Postazione postazione) {
@@ -56,4 +62,28 @@ public class PostazioneService {
     public long count() {
         return postazioniRepository.count();
     }
+
+    public boolean isPostazioneOccupata(Postazione postazione, LocalDate data) {
+     /*   List<Prenotazione> prenotazioni = prenotazioneService.getPrenotazioniByDataAndPostazione(data, postazione);
+        return prenotazioni.isEmpty();*/
+        if (prenotazioneService.getPrenotazioniByDataAndPostazione(data, postazione).isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public List<Postazione> getRandomPostazioni(int count) {
+        List<Postazione> postazioni = postazioniRepository.findAll();
+        List<Postazione> randomPostazioni = new ArrayList<>();
+
+        Random random = new Random();
+        while (randomPostazioni.size() < count) {
+            int index = random.nextInt(postazioni.size());
+            if (!randomPostazioni.contains(postazioni.get(index))) {
+                randomPostazioni.add(postazioni.get(index));
+            }
+        }
+        return randomPostazioni;
+    }
+
 }
