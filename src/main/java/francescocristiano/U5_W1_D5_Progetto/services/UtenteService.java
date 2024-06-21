@@ -1,0 +1,53 @@
+package francescocristiano.U5_W1_D5_Progetto.services;
+
+import francescocristiano.U5_W1_D5_Progetto.entities.Utente;
+import francescocristiano.U5_W1_D5_Progetto.repositories.UtenteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class UtenteService {
+
+    @Autowired
+    private UtenteRepository utenteRepository;
+
+
+    public void saveUtente(Utente utente) {
+        utenteRepository.save(utente);
+        System.out.println("Utente salvato con successo");
+    }
+
+    public void saveAllUtenti(List<Utente> utenti) {
+        utenteRepository.saveAll(utenti);
+        System.out.println("Utenti salvati con successo");
+    }
+
+    public List<Utente> getAllUtenti() {
+        return utenteRepository.findAll();
+    }
+
+    public Utente getUtenteById(UUID id) {
+        return utenteRepository.findById(id).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+    }
+
+    public void deleteUtenteById(UUID id) {
+        utenteRepository.deleteById(id);
+        System.out.println("Utente eliminato con successo");
+    }
+
+    public void findAndUpdate(UUID id, Utente utente) {
+        Utente utenteToUpdate = this.getUtenteById(id);
+        utenteToUpdate.setUsername(utente.getUsername());
+        utenteToUpdate.setNomeCompleto(utente.getNomeCompleto());
+        utenteToUpdate.setEmail(utente.getEmail());
+        utenteRepository.save(utenteToUpdate);
+        System.out.println("Utente modificato con successo");
+    }
+
+    public long count() {
+        return utenteRepository.count();
+    }
+}
