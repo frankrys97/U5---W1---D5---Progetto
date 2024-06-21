@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Configuration
 public class BeanConfiguration {
@@ -101,12 +102,14 @@ public class BeanConfiguration {
     public List<Prenotazione> prenotazioni() {
         List<Prenotazione> prenotazioni = new ArrayList<>();
         List<Utente> utenti = utenteService.getRandomUtenti(10);
-        List<Postazione> postazioni = postazioneService.getRandomPostazioni(10);
+        List<Postazione> postazioni = postazioneService.getAllPostazioni();
         for (Utente utente : utenti) {
             for (int i = 0; i < 3; i++) {
+                Random random = new Random();
                 LocalDate data = LocalDate.now().plusDays(i + 1);
-                if (!postazioneService.isPostazioneOccupata(postazioni.get(i), data)) {
-                    Prenotazione prenotazione = new Prenotazione(data, utente, postazioni.get(i));
+                Postazione postazioneRandomica = postazioni.get(random.nextInt(postazioni.size()));
+                if (!postazioneService.isPostazioneOccupata(postazioneRandomica, data)) {
+                    Prenotazione prenotazione = new Prenotazione(data, utente, postazioneRandomica);
                     prenotazioneService.savePrenotazione(prenotazione);
                     prenotazioni.add(prenotazione);
                 }
