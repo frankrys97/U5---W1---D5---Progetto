@@ -18,9 +18,27 @@ public class UtenteService {
 
 
     public void saveUtente(Utente utente) {
+        /*utenteRepository.save(utente);*/
+
+       /* if (utenteRepository.existsById(utente.getId())) {
+            throw new RuntimeException("Id esistente");
+        }*/
+
+        if (utenteRepository.existsByUsername(utente.getUsername())) {
+            throw new RuntimeException("Username esistente");
+        }
+
+        if (utenteRepository.existsByEmail(utente.getEmail())) {
+            throw new RuntimeException("Email esistente");
+        }
+
         utenteRepository.save(utente);
-        System.out.println("Utente salvato con successo");
     }
+
+    public Utente findByUsername(String username) {
+        return utenteRepository.findByUsername(username);
+    }
+
 
     public void saveAllUtenti(List<Utente> utenti) {
         utenteRepository.saveAll(utenti);

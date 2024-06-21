@@ -32,4 +32,13 @@ public class Prenotazione {
         this.utente = utente;
         this.postazione = postazione;
     }
+
+    @Override
+    public String toString() {
+        return "Prenotazione{" +
+                "id=" + id +
+                ", data=" + data +
+                ", postazione=" + postazione +
+                '}';
+    }
 }

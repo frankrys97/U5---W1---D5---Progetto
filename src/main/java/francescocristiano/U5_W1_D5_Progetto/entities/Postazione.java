@@ -53,4 +53,14 @@ public class Postazione {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Postazione{" +
+                "id=" + id +
+                ", descrizione='" + descrizione + '\'' +
+                ", tipoPostazione=" + tipoPostazione +
+                ", capienzaMax=" + capienzaMax +
+                ", edificio=" + edificio +
+                '}';
+    }
 }

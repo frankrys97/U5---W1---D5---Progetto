@@ -19,13 +19,11 @@ public class PrenotazioneService {
 
     public void savePrenotazione(Prenotazione prenotazione) {
         prenotazioneRepository.save(prenotazione);
-        System.out.println("Prenotazione salvata con successo");
     }
 
 
     public void saveAllPrenotazioni(List<Prenotazione> prenotazioni) {
         prenotazioneRepository.saveAll(prenotazioni);
-        System.out.println("Prenotazioni salvate con successo");
     }
 
 
@@ -40,7 +38,6 @@ public class PrenotazioneService {
 
     public void deletePrenotazioneById(UUID id) {
         prenotazioneRepository.deleteById(id);
-        System.out.println("Prenotazione eliminata con successo");
     }
 
 
@@ -50,7 +47,6 @@ public class PrenotazioneService {
         prenotazioneToUpdate.setUtente(prenotazione.getUtente());
         prenotazioneToUpdate.setPostazione(prenotazione.getPostazione());
         prenotazioneRepository.save(prenotazioneToUpdate);
-        System.out.println("Prenotazione modificata con successo");
     }
 
     public long count() {
@@ -59,7 +55,10 @@ public class PrenotazioneService {
 
     public List<Prenotazione> getPrenotazioniByDataAndPostazione(LocalDate data, Postazione postazione) {
         return prenotazioneRepository.findAll().stream().filter(prenotazione -> prenotazione.getData().equals(data) && prenotazione.getPostazione().equals(postazione)).toList();
+    }
 
+    public List<Prenotazione> findByUtenteId(UUID utenteId) {
+        return prenotazioneRepository.findAllByUtenteId(utenteId);
     }
 }
 

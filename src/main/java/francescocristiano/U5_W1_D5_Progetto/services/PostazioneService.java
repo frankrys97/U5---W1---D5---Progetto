@@ -1,6 +1,8 @@
 package francescocristiano.U5_W1_D5_Progetto.services;
 
+import francescocristiano.U5_W1_D5_Progetto.entities.Edificio;
 import francescocristiano.U5_W1_D5_Progetto.entities.Postazione;
+import francescocristiano.U5_W1_D5_Progetto.enums.TipoPostazione;
 import francescocristiano.U5_W1_D5_Progetto.repositories.PostazioniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +25,11 @@ public class PostazioneService {
 
     public void savePostazione(Postazione postazione) {
         postazioniRepository.save(postazione);
-        System.out.println("Postazione salvata con successo");
     }
 
 
     public void saveAllPostazioni(List<Postazione> postazioni) {
         postazioniRepository.saveAll(postazioni);
-        System.out.println("Postazioni salvate con successo");
     }
 
 
@@ -45,7 +45,10 @@ public class PostazioneService {
 
     public void deletePostazioneById(UUID id) {
         postazioniRepository.deleteById(id);
-        System.out.println("Postazione eliminata con successo");
+    }
+
+    public List<Postazione> getPostazioniByEdificioAndTipoPostazione(Edificio edificio, TipoPostazione tipoPostazione) {
+        return postazioniRepository.findAllByEdificioAndTipoPostazione(edificio, tipoPostazione);
     }
 
 

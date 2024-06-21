@@ -17,13 +17,13 @@ public class EdificioService {
 
     public void saveEdificio(Edificio edificio) {
         edificioRepository.save(edificio);
-        System.out.println("Edificio salvato con successo");
+
     }
 
 
     public void saveAllEdifici(List<Edificio> edifici) {
         edificioRepository.saveAll(edifici);
-        System.out.println("Edifici salvati con successo");
+
     }
 
 
@@ -39,7 +39,6 @@ public class EdificioService {
 
     public void deleteEdificioById(UUID id) {
         edificioRepository.deleteById(id);
-        System.out.println("Edificio eliminato con successo");
     }
 
 
@@ -49,7 +48,7 @@ public class EdificioService {
         edificioToUpdate.setIndirizzo(edificio.getIndirizzo());
         edificioToUpdate.setCitta(edificio.getCitta());
         edificioRepository.save(edificioToUpdate);
-        System.out.println("Edificio modificato con successo");
+
     }
 
 
