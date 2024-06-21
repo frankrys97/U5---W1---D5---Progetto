@@ -30,9 +30,9 @@ public class Postazione {
     @OneToMany(mappedBy = "postazione")
     private List<Prenotazione> prenotazioni;
 
-    public Postazione(String descrizione, TipoPostazione tipoPostazione, Edificio edificio) {
-        this.descrizione = descrizione;
+    public Postazione(TipoPostazione tipoPostazione, Edificio edificio, String descrizione) {
         this.tipoPostazione = tipoPostazione;
+        this.descrizione = descrizione;
         this.capienzaMax = 0;
         setCapienzaMax();
         this.edificio = edificio;
