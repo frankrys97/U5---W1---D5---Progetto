@@ -36,11 +36,11 @@ public class UtenteService {
     }
 
     public Utente findByUsername(String username) {
-        return utenteRepository.findByUsername(username);
+        return utenteRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Utente non trovato"));
     }
 
     public Utente findByEmail(String email) {
-        return utenteRepository.findByEmail(email);
+        return utenteRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Utente con questa email " + email + " non trovato"));
     }
 
 
